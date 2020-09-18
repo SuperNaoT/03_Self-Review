@@ -6,16 +6,8 @@ h1, h2, h3, h4, h5, h6, p, div {
   padding: 0;
 }
 
-body {
-  font-family: 'Hiragino Kaku Gothic ProN W3', sans-serif;
-}
-
 li {
   list-style: none;
-}
-
-a {
-  text-decoration: none;
 }
 
 /* ここからCSSを書いていきましょう */
@@ -28,6 +20,29 @@ a {
   box-sizing: border-box;
 }
 
+body {
+  margin: 0;
+  font-family: 'Hiragino Kaku Gothic ProN W3', sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+/*
+ *　レスポンシブデザインにした際、各要素を表示％指定にて各デバイス横幅に合わせて表示する。
+ *　その際の親DIVコンテナの高さ指定について、理想はデバイス事に実寸ピクセル数を指定できれば良いが、
+ *　複数のデバイスに対応させる為に敢えて親の高さを指定しない。
+ *
+ *　親に含まれる子要素を横並びに表示させる為に、全ての子要素に「float:left;」指定をすると、
+ *　親のコンテナの高さが「０」となり、それ以降の画面が重なり表示が壊れる。
+ *　それを避ける為に、一番最後の子要素の下に「class="clear"」のコンテナを用意し、
+ *　そのクラスに【clear: left;】定義を加え、敢えて「float」属性を解除し親コンテナに高さを持たせる。
+ */
+.clear {
+  clear: left;
+}
+
 /*
  *　画面に対する表示位置を統一させる、コンテナ定義。
  */
@@ -37,6 +52,7 @@ a {
  *　画面サイズ変更時に、横並び要素の画面外への押し出しを回避する為に、
  *　表示対象横幅指定を「％」に変更する。
   width: 1170px; */
+  max-width: 1170px;
   width: 100%;
   margin: 0 auto;
 }
@@ -70,21 +86,31 @@ header  {
   margin-top: 20px;
 }
 
+/*
+ * スマホ表示時、TOPメニューはプルダウンブロックメニューを表示する。
+ * 通常利用時は、非表示にしておく。
+ */
+.menu-icon {
+  /* displayをnoneに指定してください */
+  display: none; 
+}
+
 /* ヘッダー構成内、右サイドメニュー配置定義 */
 .header-right {
   float: right;
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.3);
+/*  background-color: rgba(255, 255, 255, 0.3); */
   margin-right: 5px;
 }
 .header-right:hover {
   background-color: rgba(255, 255, 255, 0.5);
 }
-.header-a {
-  display: block;
-  color: white;
+.header-right a {
   line-height: 65px;
   padding: 0 25px;
+  color: white;
+  display: block;
+  float: left;
 }
 
 .main{
@@ -97,7 +123,7 @@ header  {
  ***********************************************************
  */
 /*
- *　メインボディ部内、トップ部表示定義。
+ *　メインボディ部内トップ部、表示定義。
  ***********************************************************
  */
  .top-wrapper {
@@ -124,36 +150,42 @@ header  {
 }
 
 /* 各種ログイン等、ボタン定義 */
-.buttons {
+.btn-wrapper {
 /*  margin-top: 40px; */
-  margin-top: 40px;
+  margin: 20px 0;
+  text-align: center;
 /*  border: solid; */
 }
-.buttons p {
+
+.btn-wrapper p {
 /*  margin: 23px 0; */
-  margin: 23px 0;
-}
-.btn {
-  padding: 8px 24px;
-  color: white;
-  opacity: 0.8;
-}
-.btn:hover {
-  opacity: 1;
+  margin: 10px 0;
 }
 
 /* 新規ログイン */
-.newentry {
+.signup {
   background-color: #239b76;
 }
 
 /* 各種SNSログイン */
 .facebook {
   background-color: #3b5998;
+  margin-right: 10px;
 }
 .twitter {
   background-color: #55acee;
-  margin-left: 10px;
+}
+
+.btn {
+  padding: 8px 24px;
+  color: white;
+  display: inline-block;
+  opacity: 0.8;
+  border-radius: 4px;
+  text-align: center;
+}
+.btn:hover {
+  opacity: 1;
 }
 
 /* SNSアイコン表示設定 */
@@ -163,12 +195,16 @@ header  {
 }
 
 /*
- *　メインボディ部内中断、各種レッスン種別表示定義。
+ *　メインボディ部内中央部、各種レッスン種別表示定義。
  ***********************************************************
  */
 .lesson-wrapper {
-  height: 500px;
-  padding-top: 80px;
+/*  height: 500px; ・・・この指定が有ると、iPad/iPhone 等のデバイスにてサイズを変更した際に、
+ *　　　　　　　　　　　　 固定サイズ表示にて、画面が壊れる。
+ */
+  padding-bottom: 80px;
+  padding-left: 5%;
+  padding-right: 5%;
   text-align: center;
   background-color: #f7f7f7;
 /* for DEBUG *//*  border: solid 1px red; */
@@ -208,18 +244,18 @@ header  {
  *　メインボディ部内、参加促進部表示定義。
  ***********************************************************
  */
-.join-wrapper {
+.message-wrapper {
   padding: 80px 0;
   text-align: center;
 /* for DEBUG *//*  border: solid 1px red; */
 }
-.join-wrapper h2 {
+.message-wrapper h2 {
   font-weight: normal;
 }
-.join-wrapper h3 {
+.message-wrapper h3 {
   margin-bottom: 65px;
 }
-.get-start {
+.message {
   padding: 15px 40px;
   background-color: #5dca88;
   border: dashed 1px #000;
@@ -235,13 +271,13 @@ header  {
  *　フッタ部表示定義。
  ***********************************************************
  */
- .footer-wrapper {
+.footer-wrapper {
   padding-top: 30px;
-  padding-bottom: 30px;
+  padding-bottom: 20px;
 /* for DEBUG *//*  border: solid 1px red; */
 }
 .footer-logo {
-  width: 124px;
+  width: 125px;
 }
 .footer-wrapper p {
   font-size: 12px;
